@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { weddingData } from './data/wedding';
 import { FilmGrain } from './components/FilmGrain';
-import { MusicPlayer } from './components/MusicPlayer';
 import { HeaderMenu } from './components/HeaderMenu';
 import { Lightbox } from './components/Lightbox';
 import { EnvelopeOpener } from './components/EnvelopeOpener';
@@ -60,10 +59,7 @@ export const App: React.FC = () => {
       {/* Film Grain Subtle Overlay */}
       <FilmGrain />
 
-      {/* Music Player */}
-      <MusicPlayer />
-
-      {/* Header Menu Overlay */}
+      {/* Header Menu & Music Player Centered Overlay */}
       <HeaderMenu sections={MENU_SECTIONS} onOpenAdmin={() => setIsAdminOpen(true)} />
 
       {/* Main Editorial Mobile Container (Target 375/390/414px) */}

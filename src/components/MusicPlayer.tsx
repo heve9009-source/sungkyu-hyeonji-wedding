@@ -11,16 +11,19 @@ export const MusicPlayer: React.FC = () => {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(err => {
-        console.error("Audio playback error:", err);
-      });
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch((err) => {
+          console.error('Audio playback error:', err);
+        });
     }
   };
 
   return (
-    <div className="fixed top-6 right-20 z-[90]">
+    <>
       <audio
         ref={audioRef}
         loop
@@ -28,14 +31,14 @@ export const MusicPlayer: React.FC = () => {
       />
       <button
         onClick={togglePlay}
-        className={`flex items-center gap-1.5 px-3 py-1.5 text-[10px] tracking-editorial font-serif border border-white/20 bg-[#465F4C]/85 backdrop-blur-sm text-white/90 transition-all duration-300 ${
-          isPlaying ? 'border-white/40 bg-white/15 text-white' : 'hover:border-white/40'
+        className={`flex items-center gap-1 px-2.5 py-1 text-[9px] tracking-editorial font-serif border border-white/20 bg-black/40 backdrop-blur-sm text-white/90 transition-all duration-300 rounded-none cursor-pointer ${
+          isPlaying ? 'border-white/50 bg-white/20 text-white' : 'hover:border-white/40 hover:bg-black/60'
         }`}
         aria-label="Toggle Background Music"
       >
-        <Music className={`w-3 h-3 ${isPlaying ? 'animate-spin' : ''}`} />
+        <Music className={`w-2.5 h-2.5 ${isPlaying ? 'animate-spin' : ''}`} />
         <span>♪ OUR SONG</span>
       </button>
-    </div>
+    </>
   );
 };

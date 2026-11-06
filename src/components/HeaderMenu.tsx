@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { MusicPlayer } from './MusicPlayer';
 
 interface MenuProps {
   sections: Array<{ id: string; label: string; enLabel: string }>;
@@ -20,13 +21,17 @@ export const HeaderMenu: React.FC<MenuProps> = ({ sections, onOpenAdmin }) => {
 
   return (
     <>
-      <div className="fixed top-6 right-6 z-[95]">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="px-3.5 py-1.5 text-[11px] tracking-editorial font-serif uppercase border border-white/20 bg-black/40 backdrop-blur-sm text-white/90 hover:border-white/40 transition-all"
-        >
-          MENU
-        </button>
+      {/* Top Centered Bar with compact OUR SONG and MENU */}
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[95] max-w-mobile w-full flex items-center justify-center gap-2 px-4 pointer-events-none">
+        <div className="pointer-events-auto flex items-center gap-2">
+          <MusicPlayer />
+          <button
+            onClick={() => setIsOpen(true)}
+            className="px-2.5 py-1 text-[9px] tracking-editorial font-serif uppercase border border-white/20 bg-black/40 backdrop-blur-sm text-white/90 hover:border-white/40 hover:bg-black/60 transition-all rounded-none cursor-pointer"
+          >
+            MENU
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
