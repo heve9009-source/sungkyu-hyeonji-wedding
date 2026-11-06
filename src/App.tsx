@@ -39,7 +39,12 @@ const MENU_SECTIONS = [
 
 export const App: React.FC = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return new URLSearchParams(window.location.search).get('opened') === 'true';
+    }
+    return false;
+  });
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
   // Lock body scroll while envelope opener is active

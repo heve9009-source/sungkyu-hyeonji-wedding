@@ -6,7 +6,12 @@ interface EnvelopeOpenerProps {
 }
 
 export const EnvelopeOpener: React.FC<EnvelopeOpenerProps> = ({ onOpen }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return new URLSearchParams(window.location.search).get('opened') === 'true';
+    }
+    return false;
+  });
 
   const handleOpen = () => {
     if (isOpen) return;

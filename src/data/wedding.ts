@@ -48,6 +48,14 @@ export interface WeddingData {
     description: string;
     photo: string;
   }>;
+  timelinePhotos: Array<{
+    id: number;
+    src: string;
+    alt: string;
+    title: string;
+    year: string;
+    description: string;
+  }>;
   maps: {
     kakao: string;
     naver: string;
@@ -191,6 +199,56 @@ export const weddingData: WeddingData = {
       title: "THE WEDDING DAY",
       description: "영원히 함께 걸어갈 새로운 계절의 시작, 그 찬란한 첫걸음을 내딛습니다.",
       photo: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1000&q=80"
+    }
+  ],
+  timelinePhotos: [
+    {
+      id: 1,
+      src: "/images/timeline/photo1.jpg",
+      alt: "첫 만남",
+      title: "THE FIRST ENCOUNTER",
+      year: "2022",
+      description: "따뜻했던 봄날의 어느 오후, 두 사람의 첫 대화가 시작되었습니다."
+    },
+    {
+      id: 2,
+      src: "/images/timeline/photo2.jpg",
+      alt: "첫 여행",
+      title: "FIRST TRIP TOGETHER",
+      year: "2023",
+      description: "함께 맞이한 사계절 속에서 서로에 대한 믿음과 사랑이 더욱 깊어졌습니다."
+    },
+    {
+      id: 3,
+      src: "/images/timeline/photo3.jpg",
+      alt: "사계절의 추억",
+      title: "SEASONS IN LOVE",
+      year: "2024",
+      description: "서로가 서로의 가장 편안하고 따뜻한 안식처가 되기로 약속했습니다."
+    },
+    {
+      id: 4,
+      src: "/images/timeline/photo4.jpg",
+      alt: "소중한 약속",
+      title: "OUR PROMISE",
+      year: "2025",
+      description: "평생을 함께 걸어가기로 약속한 그 소중한 순간"
+    },
+    {
+      id: 5,
+      src: "/images/timeline/photo5.jpg",
+      alt: "웨딩 촬영",
+      title: "WEDDING MOMENT",
+      year: "2026",
+      description: "서로를 바라보는 눈빛 속에 가득 담긴 설렘과 행복"
+    },
+    {
+      id: 6,
+      src: "/images/timeline/photo6.jpg",
+      alt: "결혼식의 날",
+      title: "THE WEDDING DAY",
+      year: "2027. 05. 08",
+      description: "라도무스 루미니스홀에서 영원한 사랑의 첫걸음을 내딛습니다."
     }
   ],
   maps: {
