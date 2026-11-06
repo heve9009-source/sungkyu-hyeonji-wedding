@@ -90,21 +90,21 @@ export interface WeddingData {
 export const weddingData: WeddingData = {
   groom: {
     nameKo: "성규",
-    fullNameKo: "성규",
+    fullNameKo: "박성규",
     nameEn: "SUNGKYU",
     father: "ㅇㅇㅇ",
     mother: "ㅇㅇㅇ",
     phone: "010-1234-5678",
     accountBank: "신한은행",
     accountNumber: "110-123-456789",
-    accountOwner: "성규",
+    accountOwner: "박성규",
     accounts: [
       {
         role: "신랑",
-        name: "성규",
+        name: "박성규",
         bank: "신한은행",
         accountNumber: "110-123-456789",
-        accountOwner: "성규"
+        accountOwner: "박성규"
       },
       {
         role: "아버지",
