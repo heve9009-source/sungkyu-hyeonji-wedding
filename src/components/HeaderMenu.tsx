@@ -1,0 +1,95 @@
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
+
+interface MenuProps {
+  sections: Array<{ id: string; label: string; enLabel: string }>;
+  onOpenAdmin?: () => void;
+}
+
+export const HeaderMenu: React.FC<MenuProps> = ({ sections, onOpenAdmin }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const scrollTo = (id: string) => {
+    setIsOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <>
+      <div className="fixed top-6 right-6 z-[95]">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="px-3.5 py-1.5 text-[11px] tracking-editorial font-serif uppercase border border-white/20 bg-[#465F4C]/85 backdrop-blur-sm text-white/90 hover:border-white/40 transition-all"
+        >
+          MENU
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-[100] bg-[#465F4C] text-white flex flex-col justify-between p-8"
+          >
+            <div className="flex justify-between items-center pt-2">
+              <span className="text-[10px] tracking-editorial uppercase text-white/70">
+                A GARDEN WEDDING
+              </span>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 text-white/80 hover:text-white"
+                aria-label="Close menu"
+              >
+                <X className="w-5 h-5 stroke-[1.5]" />
+              </button>
+            </div>
+
+            <nav className="my-auto py-8">
+              <ul className="space-y-5 text-center">
+                {sections.map((sec) => (
+                  <li key={sec.id}>
+                    <button
+                      onClick={() => scrollTo(sec.id)}
+                      className="group flex flex-col items-center mx-auto"
+                    >
+                      <span className="font-serif text-2xl tracking-widest text-white group-hover:text-champagne transition-colors uppercase">
+                        {sec.enLabel}
+                      </span>
+                      <span className="text-[11px] text-white/60 font-light mt-0.5">
+                        {sec.label}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className="text-center space-y-2 pb-2">
+              <div className="text-[10px] tracking-editorial text-white/50 uppercase">
+                SUNGKYU & HYEONJI
+              </div>
+              {onOpenAdmin && (
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    onOpenAdmin();
+                  }}
+                  className="text-[9px] tracking-widest text-white/40 hover:text-white/80 underline decoration-white/25 underline-offset-4"
+                >
+                  [관리자] 참석자 명단 확인
+                </button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+};
