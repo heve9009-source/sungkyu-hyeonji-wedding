@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Edit3, Type, RotateCcw, Trash2, X, Send, Check } from 'lucide-react';
+import { Edit3, Type, RotateCcw, Trash2, X, Send, Check } from 'lucide-react';
 import { guestbookService, GuestbookEntry } from '../../services/guestbook';
 import { Sticker } from '../Sticker';
 
@@ -192,40 +192,26 @@ export const HandwrittenGuestbookSection: React.FC = () => {
           <span className="w-10 h-[1px] bg-white/25" />
         </div>
 
-        {/* Book Trigger Button (책모양 누르면) */}
-        <div className="relative pt-2">
+        {/* Realistic Book Trigger (사진의 책을 눌러 모달 열기) */}
+        <div className="relative pt-2 flex flex-col items-center">
           <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+            type="button"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => setIsModalOpen(true)}
-            className="w-full py-8 px-6 border border-white/25 bg-white/[0.05] hover:bg-white/[0.09] transition-all flex flex-col items-center justify-center gap-3 shadow-lg group relative"
+            className="relative w-full max-w-[310px] aspect-[563/446] mx-auto cursor-pointer focus:outline-none select-none group"
+            aria-label="방명록 책 열기"
           >
-            {/* Sticker decor */}
-            <Sticker
-              type="chamomile-bouquet"
-              width={48}
-              rotate={8}
-              className="absolute -top-4 -right-3 z-10 pointer-events-none"
+            {/* The Book Image with physical drop shadow */}
+            <img
+              src="/images/guestbook_book.png"
+              alt="Handwritten Guest Book - 성규 & 현지"
+              className="w-full h-full object-contain filter drop-shadow-[0_16px_28px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:drop-shadow-[0_20px_34px_rgba(0,0,0,0.65)]"
+              draggable={false}
             />
 
-            {/* Book Icon */}
-            <div className="w-14 h-14 rounded-full border border-white/30 bg-white/10 flex items-center justify-center text-white shadow-sm group-hover:scale-105 group-hover:border-white/50 transition-all">
-              <BookOpen className="w-6 h-6 stroke-[1.5]" />
-            </div>
-
-            <div className="space-y-1">
-              <span className="font-serif text-sm text-white tracking-widest font-medium block">
-                책을 눌러 방명록 남기기
-              </span>
-              <span className="font-serif text-[11px] text-white/70 tracking-editorial uppercase block font-light">
-                TAP BOOK TO LEAVE A NOTE
-              </span>
-            </div>
-
-            <div className="flex items-center gap-2 text-[10px] text-white/60 tracking-wider font-serif">
-              <Edit3 className="w-3 h-3 text-[#E8D4C8]" />
-              <span>손글씨 서명 & 축하글 작성</span>
-            </div>
+            {/* Gentle tap hint on hover/touch */}
+            <div className="absolute inset-0 rounded-md bg-white/0 group-hover:bg-white/5 transition-colors pointer-events-none" />
           </motion.button>
         </div>
 
