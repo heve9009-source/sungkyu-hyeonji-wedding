@@ -37,7 +37,7 @@ export const MusicPlayer: React.FC = () => {
         aria-label="Toggle Background Music"
       >
         <Music className={`w-2.5 h-2.5 ${isPlaying ? 'animate-spin' : ''}`} />
-        <span>♪ OUR SONG</span>
+        <span>SONG</span>
       </button>
     </>
   );
