@@ -7,36 +7,35 @@ import { Lightbox } from './components/Lightbox';
 import { EnvelopeOpener } from './components/EnvelopeOpener';
 import { AdminModal } from './components/AdminModal';
 
-// 16 Sections Imports
-import { CoverSection } from './components/sections/01_Cover';
-import { InvitationSection } from './components/sections/02_Invitation';
-import { OurStorySection } from './components/sections/03_OurStory';
-import { FullscreenPhotoSection } from './components/sections/04_FullscreenPhoto';
+// 13 Streamlined Sections
+import { HeroPhotoSection } from './components/sections/01_HeroPhoto';
+import { WeddingInfoSection } from './components/sections/02_WeddingInfo';
+import { InvitationSection } from './components/sections/03_Invitation';
+import { CalendarSection } from './components/sections/04_Calendar';
 import { TimelineSection } from './components/sections/05_Timeline';
-import { GreenInterludeSection } from './components/sections/06_GreenInterlude';
-import { TheDetailsSection } from './components/sections/07_TheDetails';
-import { WeddingDaySection } from './components/sections/08_WeddingDay';
-import { LocationSection } from './components/sections/09_Location';
-import { ChampagnePhotoSection } from './components/sections/10_ChampagnePhoto';
-import { ANoteFromUsSection } from './components/sections/11_ANoteFromUs';
-import { GallerySection } from './components/sections/12_Gallery';
-import { RsvpSection } from './components/sections/13_Rsvp';
-import { GuestbookSection } from './components/sections/14_Guestbook';
-import { AccountSection } from './components/sections/15_Account';
-import { FinalSection } from './components/sections/16_FinalSection';
+import { GalleryJournalSection } from './components/sections/06_GalleryJournal';
+import { WeddingVideoSection } from './components/sections/07_WeddingVideo';
+import { LocationMapSection } from './components/sections/08_LocationMap';
+import { AccessTabsSection } from './components/sections/09_AccessTabs';
+import { InformationSection } from './components/sections/10_Information';
+import { HandwrittenGuestbookSection } from './components/sections/11_HandwrittenGuestbook';
+import { AccountSection } from './components/sections/12_Account';
+import { ThankYouSection } from './components/sections/13_ThankYou';
 
 const MENU_SECTIONS = [
-  { id: 'cover', label: '표지', enLabel: 'COVER' },
+  { id: 'hero', label: '메인', enLabel: 'MAIN' },
+  { id: 'wedding-info', label: '예식 정보', enLabel: 'INFO' },
   { id: 'invitation', label: '초대합니다', enLabel: 'INVITATION' },
-  { id: 'story', label: '스토리', enLabel: 'OUR STORY' },
+  { id: 'calendar', label: '달력', enLabel: 'CALENDAR' },
   { id: 'timeline', label: '타임라인', enLabel: 'TIMELINE' },
-  { id: 'details', label: '디테일', enLabel: 'THE DETAILS' },
-  { id: 'weddingday', label: '예식일', enLabel: 'WEDDING DAY' },
-  { id: 'location', label: '오시는 길', enLabel: 'LOCATION' },
   { id: 'gallery', label: '갤러리', enLabel: 'GALLERY' },
-  { id: 'rsvp', label: '참석 여부', enLabel: 'RSVP' },
-  { id: 'guestbook', label: '방명록', enLabel: 'GUESTBOOK' },
-  { id: 'account', label: '마음 전하실 곳', enLabel: 'ACCOUNT' }
+  { id: 'video', label: '영상', enLabel: 'VIDEO' },
+  { id: 'location', label: '오시는 길', enLabel: 'LOCATION' },
+  { id: 'access', label: '교통편', enLabel: 'ACCESS' },
+  { id: 'information', label: '안내사항', enLabel: 'NOTICE' },
+  { id: 'guestbook', label: '손글씨 방명록', enLabel: 'GUESTBOOK' },
+  { id: 'account', label: '마음 전하실 곳', enLabel: 'ACCOUNT' },
+  { id: 'thankyou', label: '감사의 글', enLabel: 'THANK YOU' },
 ];
 
 export const App: React.FC = () => {
@@ -44,7 +43,7 @@ export const App: React.FC = () => {
   const [isOpened, setIsOpened] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
 
-  // Lock body scroll while ribbon opener is active
+  // Lock body scroll while envelope opener is active
   useEffect(() => {
     if (!isOpened) {
       document.body.style.overflow = 'hidden';
@@ -55,7 +54,7 @@ export const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black flex justify-center selection:bg-white/20 selection:text-white">
-      {/* Romantic Photo Lace Envelope Opener */}
+      {/* 00. Romantic Photo Lace Envelope Opener (Kept completely intact) */}
       <EnvelopeOpener onOpen={() => setIsOpened(true)} />
 
       {/* Film Grain Subtle Overlay */}
@@ -68,57 +67,48 @@ export const App: React.FC = () => {
       <HeaderMenu sections={MENU_SECTIONS} onOpenAdmin={() => setIsAdminOpen(true)} />
 
       {/* Main Editorial Mobile Container (Target 375/390/414px) */}
-      <main className="w-full max-w-mobile bg-[#465F4C] text-white shadow-2xl overflow-x-hidden relative min-h-screen">
-        {/* 01. COVER */}
-        <CoverSection data={weddingData} />
+      <main className="w-full max-w-mobile bg-[#465F4C] text-white shadow-2xl overflow-x-hidden relative min-h-screen font-serif">
+        {/* 01. 메인 사진 크게 */}
+        <HeroPhotoSection data={weddingData} />
 
-        {/* 02. INVITATION */}
+        {/* 02. 결혼식 정보 (날짜/홀/구분선/혼주/성규&현지) */}
+        <WeddingInfoSection data={weddingData} />
+
+        {/* 03. (INVITATION) 초대글 */}
         <InvitationSection />
 
-        {/* 03. OUR STORY */}
-        <OurStorySection data={weddingData} />
+        {/* 04. (달력) MAY, 2027 달력 아트 (2027.05.08 표시) */}
+        <CalendarSection data={weddingData} />
 
-        {/* 04. FULLSCREEN PHOTO */}
-        <FullscreenPhotoSection data={weddingData} />
-
-        {/* 05. TIMELINE */}
+        {/* 05. (우리의 타임라인) 세로로 긴 바모양 시간, 사진 순 */}
         <TimelineSection data={weddingData} />
 
-        {/* 06. GREEN INTERLUDE */}
-        <GreenInterludeSection />
-
-        {/* 07. THE DETAILS */}
-        <TheDetailsSection data={weddingData} />
-
-        {/* 08. WEDDING DAY */}
-        <WeddingDaySection data={weddingData} />
-
-        {/* 09. LOCATION */}
-        <LocationSection data={weddingData} />
-
-        {/* 10. CHAMPAGNE PHOTO */}
-        <ChampagnePhotoSection data={weddingData} />
-
-        {/* 11. A NOTE FROM US */}
-        <ANoteFromUsSection />
-
-        {/* 12. GALLERY */}
-        <GallerySection
+        {/* 06. (GALLERY) 수첩모양 살리기 */}
+        <GalleryJournalSection
           data={weddingData}
           onSelectPhoto={(idx) => setLightboxIndex(idx)}
         />
 
-        {/* 13. RSVP */}
-        <RsvpSection />
+        {/* 07. (동영상) 추후 넣기 */}
+        <WeddingVideoSection data={weddingData} />
 
-        {/* 14. GUESTBOOK */}
-        <GuestbookSection />
+        {/* 08. (오시는길) Location, 구분선, ADDRESS, 라도무스 루미니스홀, 구분선, MAP */}
+        <LocationMapSection data={weddingData} />
 
-        {/* 15. ACCOUNT */}
+        {/* 09. (ACCESS) (주차), (자차), (지하철), (버스) 4개 탭 */}
+        <AccessTabsSection data={weddingData} />
+
+        {/* 10. (INFORMATION) 안내사항 Photo Booth 8층 로비 설치 안내 */}
+        <InformationSection data={weddingData} />
+
+        {/* 11. (손글씨 방명록) Handwritten Guest Book 책모양 누르면 */}
+        <HandwrittenGuestbookSection />
+
+        {/* 12. (마음 전하실 곳) 신랑측/신부측 탭 & 계좌 복사 */}
         <AccountSection data={weddingData} />
 
-        {/* 16. FINAL */}
-        <FinalSection data={weddingData} />
+        {/* 13. (Thank you) 마무리 기능 (공유, 스크롤탑, 감사 인사) */}
+        <ThankYouSection data={weddingData} />
       </main>
 
       {/* Fullscreen Lightbox Modal */}
@@ -129,7 +119,7 @@ export const App: React.FC = () => {
         onNavigate={(idx) => setLightboxIndex(idx)}
       />
 
-      {/* Admin Attendance & RSVP Modal for Bride & Groom */}
+      {/* Admin Attendance & RSVP Modal for Groom & Bride */}
       <AdminModal
         isOpen={isAdminOpen}
         onClose={() => setIsAdminOpen(false)}

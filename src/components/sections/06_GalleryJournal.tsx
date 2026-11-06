@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { WeddingData } from '../../data/wedding';
 
-interface DetailsProps {
+interface GalleryJournalProps {
   data: WeddingData;
+  onSelectPhoto?: (index: number) => void;
 }
 
-export const TheDetailsSection: React.FC<DetailsProps> = ({ data }) => {
+export const GalleryJournalSection: React.FC<GalleryJournalProps> = ({ data, onSelectPhoto }) => {
   const snaps = data.weddingSnaps || [
     {
       id: 1,
@@ -63,8 +64,8 @@ export const TheDetailsSection: React.FC<DetailsProps> = ({ data }) => {
   };
 
   return (
-    <section id="details" className="py-24 px-3 sm:px-5 bg-[#465F4C] text-white relative overflow-hidden">
-      {/* Editorial Section Header */}
+    <section id="gallery" className="py-24 px-3 sm:px-5 bg-[#465F4C] text-white relative overflow-hidden">
+      {/* Editorial Header */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -73,32 +74,43 @@ export const TheDetailsSection: React.FC<DetailsProps> = ({ data }) => {
         className="text-center space-y-2 mb-8"
       >
         <span className="block font-serif text-[10px] tracking-editorial uppercase text-white/70 font-medium">
-          CHAPTER II · SNAP JOURNAL
+          SNAP JOURNAL
         </span>
         <h2 className="font-serif text-2xl sm:text-3xl tracking-widest text-white uppercase font-light">
-          THE DETAILS
+          GALLERY
         </h2>
-        <p className="font-serifkr text-xs text-white/70 font-light">
-          수첩 속 소중히 간직한 우리들의 웨딩 스냅
+        <p className="font-serif text-xs text-white/70 font-light">
+          수첩 속에 소중히 간직한 우리들의 웨딩 스냅
         </p>
+
+        {/* Clover Divider */}
+        <div className="flex items-center justify-center gap-3 pt-2">
+          <span className="w-10 h-[1px] bg-white/25" />
+          <span className="text-[11px] text-white/50 tracking-widest font-light">✤</span>
+          <span className="w-10 h-[1px] bg-white/25" />
+        </div>
       </motion.div>
 
       {/* Exact Journal Notebook Replica Frame Container */}
       <div className="relative w-full max-w-[390px] mx-auto select-none">
-        
         {/* Aspect Ratio Box matching exact 450x612 journal template */}
         <div className="relative w-full aspect-[450/612] drop-shadow-[0_16px_36px_rgba(0,0,0,0.35)]">
-          
           {/* Layer 1: Inner Photo Slider Window (Positioned exactly inside the embossed floral frame) */}
           <div
-            className="absolute z-10 overflow-hidden bg-[#242220] cursor-pointer"
+            className="absolute z-10 overflow-hidden bg-[#242220] cursor-pointer group"
             style={{
               left: '31.11%',
               top: '33.01%',
               width: '35.56%',
               height: '31.21%',
             }}
-            onClick={() => handleNext()}
+            onClick={() => {
+              if (onSelectPhoto) {
+                onSelectPhoto(currentIndex);
+              } else {
+                handleNext();
+              }
+            }}
           >
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.img
@@ -118,6 +130,11 @@ export const TheDetailsSection: React.FC<DetailsProps> = ({ data }) => {
 
             {/* Subtle Inner Shadow overlay on photo */}
             <div className="absolute inset-0 pointer-events-none shadow-[inset_0_2px_8px_rgba(0,0,0,0.35)]" />
+
+            {/* Expand Hover Hint */}
+            <div className="absolute bottom-1 right-1 p-1 bg-black/40 backdrop-blur-xs text-white/70 rounded-xs opacity-0 group-hover:opacity-100 transition-opacity">
+              <Maximize2 className="w-3 h-3" />
+            </div>
           </div>
 
           {/* Layer 2: Exact Journal Frame Artwork (Template PNG with transparent cutout window) */}
@@ -128,8 +145,7 @@ export const TheDetailsSection: React.FC<DetailsProps> = ({ data }) => {
             draggable={false}
           />
 
-          {/* Layer 3: Interactive Left & Right Navigation Arrows (Subtle Ghost buttons) */}
-          {/* Left Arrow Button */}
+          {/* Layer 3: Interactive Left & Right Navigation Arrows */}
           <button
             onClick={handlePrev}
             className="absolute z-30 top-[48.5%] -translate-y-1/2 left-2 sm:left-3 w-8 h-8 rounded-full bg-black/35 border border-white/20 backdrop-blur-sm shadow-sm flex items-center justify-center text-white/80 hover:bg-black/55 hover:text-white active:scale-95 transition-all"
@@ -138,7 +154,6 @@ export const TheDetailsSection: React.FC<DetailsProps> = ({ data }) => {
             <ChevronLeft className="w-4 h-4 stroke-[1.5]" />
           </button>
 
-          {/* Right Arrow Button */}
           <button
             onClick={handleNext}
             className="absolute z-30 top-[48.5%] -translate-y-1/2 right-2 sm:right-3 w-8 h-8 rounded-full bg-black/35 border border-white/20 backdrop-blur-sm shadow-sm flex items-center justify-center text-white/80 hover:bg-black/55 hover:text-white active:scale-95 transition-all"
@@ -177,8 +192,17 @@ export const TheDetailsSection: React.FC<DetailsProps> = ({ data }) => {
               />
             ))}
           </div>
-        </div>
 
+          {/* Subtle button to expand view */}
+          {onSelectPhoto && (
+            <button
+              onClick={() => onSelectPhoto(currentIndex)}
+              className="mt-2 text-[10px] tracking-widest text-white/60 hover:text-white underline decoration-white/25 underline-offset-4 font-serif uppercase font-light"
+            >
+              사진 크게 보기
+            </button>
+          )}
+        </div>
       </div>
     </section>
   );

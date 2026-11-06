@@ -51,18 +51,18 @@ export const HeaderMenu: React.FC<MenuProps> = ({ sections, onOpenAdmin }) => {
               </button>
             </div>
 
-            <nav className="my-auto py-8">
-              <ul className="space-y-5 text-center">
+            <nav className="my-auto py-4 overflow-y-auto max-h-[68vh] pr-1">
+              <ul className="space-y-3.5 text-center">
                 {sections.map((sec) => (
                   <li key={sec.id}>
                     <button
                       onClick={() => scrollTo(sec.id)}
                       className="group flex flex-col items-center mx-auto"
                     >
-                      <span className="font-serif text-2xl tracking-widest text-white group-hover:text-champagne transition-colors uppercase">
+                      <span className="font-serif text-xl sm:text-2xl tracking-widest text-white group-hover:text-[#E8D4C8] transition-colors uppercase font-light">
                         {sec.enLabel}
                       </span>
-                      <span className="text-[11px] text-white/60 font-light mt-0.5">
+                      <span className="text-[10px] text-white/60 font-light mt-0.5">
                         {sec.label}
                       </span>
                     </button>
