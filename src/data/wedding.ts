@@ -1,6 +1,15 @@
+export interface AccountItem {
+  role: string;
+  name: string;
+  bank: string;
+  accountNumber: string;
+  accountOwner: string;
+}
+
 export interface WeddingData {
   groom: {
     nameKo: string;
+    fullNameKo: string;
     nameEn: string;
     father: string;
     mother: string;
@@ -8,9 +17,11 @@ export interface WeddingData {
     accountBank: string;
     accountNumber: string;
     accountOwner: string;
+    accounts: AccountItem[];
   };
   bride: {
     nameKo: string;
+    fullNameKo: string;
     nameEn: string;
     father: string;
     mother: string;
@@ -18,6 +29,7 @@ export interface WeddingData {
     accountBank: string;
     accountNumber: string;
     accountOwner: string;
+    accounts: AccountItem[];
   };
   weddingDay: {
     dateIso: string;
@@ -78,23 +90,71 @@ export interface WeddingData {
 export const weddingData: WeddingData = {
   groom: {
     nameKo: "성규",
+    fullNameKo: "성규",
     nameEn: "SUNGKYU",
     father: "ㅇㅇㅇ",
     mother: "ㅇㅇㅇ",
     phone: "010-1234-5678",
     accountBank: "신한은행",
     accountNumber: "110-123-456789",
-    accountOwner: "성규"
+    accountOwner: "성규",
+    accounts: [
+      {
+        role: "신랑",
+        name: "성규",
+        bank: "신한은행",
+        accountNumber: "110-123-456789",
+        accountOwner: "성규"
+      },
+      {
+        role: "아버지",
+        name: "ㅇㅇㅇ",
+        bank: "신한은행",
+        accountNumber: "110-987-654321",
+        accountOwner: "ㅇㅇㅇ"
+      },
+      {
+        role: "어머니",
+        name: "ㅇㅇㅇ",
+        bank: "국민은행",
+        accountNumber: "123-456-789012",
+        accountOwner: "ㅇㅇㅇ"
+      }
+    ]
   },
   bride: {
     nameKo: "현지",
+    fullNameKo: "김현지",
     nameEn: "HYEONJI",
     father: "김동국",
     mother: "이경숙",
     phone: "010-8765-4321",
     accountBank: "카카오뱅크",
     accountNumber: "3333-01-2345678",
-    accountOwner: "현지"
+    accountOwner: "김현지",
+    accounts: [
+      {
+        role: "신부",
+        name: "김현지",
+        bank: "카카오뱅크",
+        accountNumber: "3333-01-2345678",
+        accountOwner: "김현지"
+      },
+      {
+        role: "아버지",
+        name: "김동국",
+        bank: "국민은행",
+        accountNumber: "4321-02-1234567",
+        accountOwner: "김동국"
+      },
+      {
+        role: "어머니",
+        name: "이경숙",
+        bank: "농협은행",
+        accountNumber: "302-1234-5678-91",
+        accountOwner: "이경숙"
+      }
+    ]
   },
   weddingDay: {
     dateIso: "2027-05-08T13:30:00",
