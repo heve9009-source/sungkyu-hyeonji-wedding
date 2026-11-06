@@ -8,7 +8,7 @@ interface WeddingInfoProps {
 
 export const WeddingInfoSection: React.FC<WeddingInfoProps> = ({ data }) => {
   return (
-    <section id="wedding-info" className="py-20 px-6 bg-[#465F4C] text-white text-center">
+    <section id="wedding-info" className="py-20 px-6 bg-transparent text-white text-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

@@ -162,6 +162,15 @@ main, main * {
     font-family: 'Alex Brush', 'Pinyon Script', cursive !important;
 }
 
+/* Textured Green Canvas Paper Background */
+.bg-canvas-texture {
+    background-color: #374C3D;
+    background-image: url('/images/green_canvas_texture.jpg');
+    background-repeat: repeat-y;
+    background-size: 100% auto;
+    background-position: top center;
+}
+
 /* --- Global Utilities & Strict Rules --- */
 html, body {
     overflow-x: hidden !important;

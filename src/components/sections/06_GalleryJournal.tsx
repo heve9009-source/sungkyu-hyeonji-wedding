@@ -64,7 +64,7 @@ export const GalleryJournalSection: React.FC<GalleryJournalProps> = ({ data, onS
   };
 
   return (
-    <section id="gallery" className="py-24 px-3 sm:px-5 bg-[#465F4C] text-white relative overflow-hidden">
+    <section id="gallery" className="py-24 px-3 sm:px-5 bg-transparent text-white relative overflow-hidden">
       {/* Editorial Header */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}

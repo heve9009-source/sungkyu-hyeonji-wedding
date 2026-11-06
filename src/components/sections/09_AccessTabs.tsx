@@ -35,7 +35,7 @@ export const AccessTabsSection: React.FC<AccessTabsProps> = ({ data }) => {
   };
 
   return (
-    <section id="access" className="py-20 px-6 bg-[#465F4C] text-white">
+    <section id="access" className="py-20 px-6 bg-transparent text-white">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

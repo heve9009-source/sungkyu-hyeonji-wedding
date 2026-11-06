@@ -12,7 +12,7 @@ export const WeddingVideoSection: React.FC<VideoProps> = ({ data, videoUrl }) =>
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section id="video" className="py-24 px-6 bg-[#465F4C] text-white text-center">
+    <section id="video" className="py-24 px-6 bg-transparent text-white text-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

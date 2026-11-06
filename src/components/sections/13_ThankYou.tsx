@@ -39,7 +39,7 @@ export const ThankYouSection: React.FC<ThankYouProps> = ({ data }) => {
   };
 
   return (
-    <footer id="thankyou" className="pt-24 pb-20 px-6 bg-[#465F4C] text-white text-center relative overflow-hidden">
+    <footer id="thankyou" className="pt-24 pb-20 px-6 bg-transparent text-white text-center relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

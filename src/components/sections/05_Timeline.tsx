@@ -8,7 +8,7 @@ interface TimelineProps {
 
 export const TimelineSection: React.FC<TimelineProps> = ({ data }) => {
   return (
-    <section id="timeline" className="py-24 px-6 bg-[#465F4C] text-white">
+    <section id="timeline" className="py-24 px-6 bg-transparent text-white">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

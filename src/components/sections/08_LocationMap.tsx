@@ -18,7 +18,7 @@ export const LocationMapSection: React.FC<LocationMapProps> = ({ data }) => {
   };
 
   return (
-    <section id="location" className="py-24 px-6 bg-[#465F4C] text-white text-center">
+    <section id="location" className="py-24 px-6 bg-transparent text-white text-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

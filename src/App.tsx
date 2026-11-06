@@ -67,7 +67,7 @@ export const App: React.FC = () => {
       <HeaderMenu sections={MENU_SECTIONS} onOpenAdmin={() => setIsAdminOpen(true)} />
 
       {/* Main Editorial Mobile Container (Target 375/390/414px) */}
-      <main className="w-full max-w-mobile bg-[#465F4C] text-white shadow-2xl overflow-x-hidden relative min-h-screen font-serif">
+      <main className="w-full max-w-mobile bg-canvas-texture text-white shadow-2xl overflow-x-hidden relative min-h-screen font-serif">
         {/* 01. 메인 사진 크게 */}
         <HeroPhotoSection data={weddingData} />
 

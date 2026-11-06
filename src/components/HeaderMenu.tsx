@@ -23,7 +23,7 @@ export const HeaderMenu: React.FC<MenuProps> = ({ sections, onOpenAdmin }) => {
       <div className="fixed top-6 right-6 z-[95]">
         <button
           onClick={() => setIsOpen(true)}
-          className="px-3.5 py-1.5 text-[11px] tracking-editorial font-serif uppercase border border-white/20 bg-[#465F4C]/85 backdrop-blur-sm text-white/90 hover:border-white/40 transition-all"
+          className="px-3.5 py-1.5 text-[11px] tracking-editorial font-serif uppercase border border-white/20 bg-black/40 backdrop-blur-sm text-white/90 hover:border-white/40 transition-all"
         >
           MENU
         </button>
@@ -36,7 +36,7 @@ export const HeaderMenu: React.FC<MenuProps> = ({ sections, onOpenAdmin }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[100] bg-[#465F4C] text-white flex flex-col justify-between p-8"
+            className="fixed inset-0 z-[100] bg-canvas-texture bg-cover bg-center text-white flex flex-col justify-between p-8"
           >
             <div className="flex justify-between items-center pt-2">
               <span className="text-[10px] tracking-editorial uppercase text-white/70">

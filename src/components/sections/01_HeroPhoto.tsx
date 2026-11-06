@@ -9,7 +9,7 @@ interface HeroProps {
 
 export const HeroPhotoSection: React.FC<HeroProps> = ({ data }) => {
   return (
-    <section id="hero" className="relative w-full pt-12 pb-16 px-5 bg-[#465F4C] text-white overflow-hidden">
+    <section id="hero" className="relative w-full pt-12 pb-16 px-5 bg-transparent text-white overflow-hidden">
       {/* Background Ambience */}
       <div className="max-w-[390px] mx-auto relative">
         {/* Subtle decorative sticker top-right */}
