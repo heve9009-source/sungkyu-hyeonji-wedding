@@ -275,11 +275,15 @@ export const weddingData: WeddingData = {
     champagneCouple: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80"
   },
   gallery: [
-    { id: 1, src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80", alt: "European Garden Wedding", aspectRatio: "tall" },
-    { id: 2, src: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80", alt: "Bride in Flower Arch", aspectRatio: "tall" },
-    { id: 3, src: "https://images.unsplash.com/photo-1545232979-fbfd42e000b5?auto=format&fit=crop&w=1200&q=80", alt: "Wedding Shoes & Bouquet", aspectRatio: "square" },
-    { id: 4, src: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80", alt: "Champagne Glasses with Ribbon", aspectRatio: "wide" },
-    { id: 5, src: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80", alt: "Champagne Toast Couple", aspectRatio: "tall" }
+    { id: 1, src: "/images/gallery/photo1.jpg", alt: "웨딩 사진 1", aspectRatio: "square" },
+    { id: 2, src: "/images/gallery/photo2.jpg", alt: "웨딩 사진 2", aspectRatio: "square" },
+    { id: 3, src: "/images/gallery/photo3.jpg", alt: "웨딩 사진 3", aspectRatio: "wide" },
+    { id: 4, src: "/images/gallery/photo4.jpg", alt: "웨딩 사진 4", aspectRatio: "square" },
+    { id: 5, src: "/images/gallery/photo5.jpg", alt: "웨딩 사진 5", aspectRatio: "wide" },
+    { id: 6, src: "/images/gallery/photo6.jpg", alt: "웨딩 사진 6", aspectRatio: "tall" },
+    { id: 7, src: "/images/gallery/photo7.jpg", alt: "웨딩 사진 7", aspectRatio: "wide" },
+    { id: 8, src: "/images/gallery/photo8.jpg", alt: "웨딩 사진 8", aspectRatio: "wide" },
+    { id: 9, src: "/images/gallery/photo9.jpg", alt: "웨딩 사진 9", aspectRatio: "wide" }
   ],
   weddingSnaps: [
     {
