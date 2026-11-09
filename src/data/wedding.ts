@@ -268,7 +268,7 @@ export const weddingData: WeddingData = {
     notice: "화환은 정중히 사양하며, 보내주시는 축하의 마음만으로도 깊이 감사드립니다."
   },
   images: {
-    cover: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80",
+    cover: "/images/main_cover.jpg",
     brideGarden: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80",
     detailShoes: "https://images.unsplash.com/photo-1545232979-fbfd42e000b5?auto=format&fit=crop&w=1200&q=80",
     champagneRibbon: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&q=80",

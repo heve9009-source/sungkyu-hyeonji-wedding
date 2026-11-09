@@ -15,8 +15,8 @@ export const ThankYouSection: React.FC<ThankYouProps> = ({ data }) => {
     if (navigator.share) {
       navigator
         .share({
-          title: `성규 ♥ 현지의 모바일 청첩장`,
-          text: `2027년 5월 8일 토요일 1:30PM 라도무스아트센터 8층 루미니스홀`,
+          title: `박성규 ♥ 김현지`,
+          text: `'27년 5월 8일 13시 30분, 대전 라도무스 루미니스홀`,
           url: window.location.href,
         })
         .catch(() => {
