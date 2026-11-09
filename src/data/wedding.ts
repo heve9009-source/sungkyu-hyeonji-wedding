@@ -70,7 +70,9 @@ export interface WeddingData {
   information: {
     photobooth: string;
     meal: string;
-    notice: string;
+    notice?: string;
+    atm?: string;
+    gift?: string;
   };
   images: {
     cover: string;
@@ -264,8 +266,9 @@ export const weddingData: WeddingData = {
   },
   information: {
     photobooth: "Photo Booth가 8층 로비에 설치되어 있으니 많은 이용 부탁드립니다.\n소중한 날 귀한 발걸음 해주신 여러분의 따뜻한 미소를 사진으로 간직하고 싶습니다.",
-    meal: "식사는 8층 예식 후 연회장에서 정성껏 준비된 뷔페로 제공됩니다.\n정갈하고 맛있는 식사와 함께 즐거운 시간 보내시길 바랍니다.",
-    notice: "화환은 정중히 사양하며, 보내주시는 축하의 마음만으로도 깊이 감사드립니다."
+    meal: "예식 이후 7층 개별 연회장에서 식사 제공됩니다. 귀한 걸음 해주신만큼 정갈하고 맛있는 음식과 함께 즐거운 시간 되시길 소망합니다.",
+    atm: "신관 7층/8층, 본관 1층",
+    gift: "신관 7층 답례품"
   },
   images: {
     cover: "/images/main_cover.jpg",
