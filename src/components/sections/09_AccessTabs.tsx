@@ -9,6 +9,11 @@ interface AccessTabsProps {
 
 type TabType = 'parking' | 'car' | 'subway' | 'bus';
 
+interface AccessItem {
+  text: string;
+  subtext?: string;
+}
+
 export const AccessTabsSection: React.FC<AccessTabsProps> = ({ data }) => {
   const [activeTab, setActiveTab] = useState<TabType>('parking');
 
@@ -27,11 +32,46 @@ export const AccessTabsSection: React.FC<AccessTabsProps> = ({ data }) => {
     { id: 'bus', label: '버스', icon: <Bus className="w-3.5 h-3.5" /> },
   ];
 
-  const contentMap: Record<TabType, string> = {
-    parking: data.accessInfo?.parking || "• 라도무스아트센터 전용 주차타워 및 지상/지하 주차장 무료 이용 가능합니다.\n• 예식 하객 분들을 위한 넉넉한 주차 공간이 완비되어 있습니다 (동시 1,300여 대 수용).",
-    car: data.accessInfo?.car || "• 네비게이션 검색: '라도무스아트센터' 또는 '대전 유성구 동서대로 639' (원신흥동 578-6)\n• 유성 IC 방면: 유성 IC 진출 후 월드컵경기장 네거리 방면 약 10분 소요\n• 서대전 IC 방면: 진잠 네거리 → 도안동 방면 약 15분 소요",
-    subway: data.accessInfo?.subway || "• 대전 지하철 1호선 [유성온천역] 하차 (3번 출구)\n• 시내버스(115번, 312번) 또는 택시 환승 (차량 약 7분 소요)",
-    bus: data.accessInfo?.bus || "• '라도무스아트센터' 또는 '어울림하트아파트' 정류장 하차\n• 간선버스: 114번, 115번, 312번, 706번\n• 지선버스: 106번, 604번"
+  const accessData: Record<TabType, AccessItem[]> = {
+    parking: [
+      {
+        text: "라도무스 전용 주차타워 및 외부주차장(제 2,3,4 주차장)",
+        subtext: "* 주차 혼잡예상으로 외부주차를 추천드립니다♥",
+      },
+      {
+        text: "하객분들을 위한 넉넉한 주차공간 완비(동시 2,300대 수용)",
+      },
+    ],
+    car: [
+      {
+        text: "네비게이션 검색: '라도무스아트센터' 또는 '대전 유성구 동서대로 639' (원신흥동 578-6)",
+      },
+      {
+        text: "유성 IC 방면: 유성 IC 진출 후 월드컵경기장 네거리 방면 약 10분 소요",
+      },
+      {
+        text: "서대전 IC 방면: 진잠 네거리 → 도안동 방면 약 15분 소요",
+      },
+    ],
+    subway: [
+      {
+        text: "대전 지하철 1호선 [유성온천역] 하차 (3번 출구)",
+      },
+      {
+        text: "시내버스(115번, 312번) 또는 택시 환승 (차량 약 7분 소요)",
+      },
+    ],
+    bus: [
+      {
+        text: "'라도무스아트센터' 또는 '어울림하트아파트' 정류장 하차",
+      },
+      {
+        text: "간선버스: 114번, 115번, 312번, 706번",
+      },
+      {
+        text: "지선버스: 106번, 604번",
+      },
+    ],
   };
 
   return (
@@ -70,7 +110,7 @@ export const AccessTabsSection: React.FC<AccessTabsProps> = ({ data }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`py-2 px-1 text-xs font-serif flex items-center justify-center gap-1 transition-all ${
+                className={`py-2 px-1 text-xs font-serif flex items-center justify-center gap-1 transition-all cursor-pointer ${
                   isActive
                     ? 'bg-white/15 text-white font-medium border border-white/30 shadow-sm'
                     : 'text-white/60 hover:text-white/90 hover:bg-white/5'
@@ -84,7 +124,7 @@ export const AccessTabsSection: React.FC<AccessTabsProps> = ({ data }) => {
         </div>
 
         {/* Lower Description Content Panel */}
-        <div className="border border-white/15 bg-white/[0.04] p-5 min-h-[130px] flex items-center">
+        <div className="border border-white/15 bg-white/[0.04] p-5 sm:p-6 min-h-[140px] flex items-center backdrop-blur-sm shadow-sm">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -94,13 +134,35 @@ export const AccessTabsSection: React.FC<AccessTabsProps> = ({ data }) => {
               transition={{ duration: 0.25 }}
               className="w-full text-left"
             >
-              <div className="space-y-2">
-                <span className="font-serif text-[10px] tracking-widest uppercase text-[#E8D4C8] block font-medium">
-                  {tabs.find((t) => t.id === activeTab)?.label} 안내
-                </span>
-                <p className="font-serif text-xs text-white/85 leading-relaxed font-light whitespace-pre-line">
-                  {contentMap[activeTab]}
-                </p>
+              <div className="space-y-3">
+                {/* Enlarged Title Header */}
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <span className="font-serif text-[15px] sm:text-base tracking-wider text-[#F4EBE1] font-medium">
+                    {tabs.find((t) => t.id === activeTab)?.label} 안내
+                  </span>
+                  <span className="text-[9px] font-serif tracking-widest uppercase text-white/40 font-light">
+                    GUIDE
+                  </span>
+                </div>
+
+                {/* Hanging Indented Bullet List */}
+                <div className="space-y-2.5 pt-0.5">
+                  {accessData[activeTab].map((item, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-left">
+                      <span className="shrink-0 select-none text-white/70 text-xs sm:text-[13px] font-serif leading-relaxed">
+                        ·
+                      </span>
+                      <div className="flex-1 min-w-0 text-xs sm:text-[13px] text-white/90 font-serif font-light leading-relaxed">
+                        <span>{item.text}</span>
+                        {item.subtext && (
+                          <span className="text-[10px] sm:text-[11px] text-[#F3D7C6] font-light ml-1.5 inline-block">
+                            {item.subtext}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>
