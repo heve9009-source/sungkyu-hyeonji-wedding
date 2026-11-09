@@ -98,27 +98,45 @@ export const LocationMapSection: React.FC<LocationMapProps> = ({ data }) => {
             MAP
           </span>
 
-          {/* Interactive Map Visual Card */}
-          <div
-            onClick={() => setPdfModalOpen(true)}
-            className="w-full border border-white/20 bg-white/[0.04] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-white/40 shadow-md cursor-pointer group relative block"
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                setPdfModalOpen(true);
-              }
-            }}
-          >
-            <div className="relative overflow-hidden">
-              <img
-                src="/images/ladomus_map.jpg"
-                alt="대전 라도무스 아트센터 약도"
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-              />
-              <div className="absolute bottom-2.5 right-2.5 px-2.5 py-1 bg-black/70 text-white text-[10px] tracking-wider font-serif border border-white/20 backdrop-blur-sm flex items-center gap-1.5 rounded-sm group-hover:bg-black/85 transition-colors">
-                <ZoomIn className="w-3 h-3 text-white/80" />
-                <span>상세 안내 (PDF) 보기</span>
+          {/* Interactive Map Visual Card with Corner Flower Accents */}
+          <div className="relative group/map">
+            {/* Top-Left Corner Flower Accent */}
+            <img
+              src="/images/map_flower_1.png"
+              alt="좌측 상단 꽃 장식"
+              className="absolute -top-3.5 -left-3.5 w-11 h-11 sm:w-12 sm:h-12 object-contain pointer-events-none z-20 -rotate-6 drop-shadow-[0_4px_10px_rgba(0,0,0,0.45)] transition-transform duration-300 group-hover/map:scale-105"
+            />
+
+            {/* Bottom-Right Corner Flower Accent */}
+            <img
+              src="/images/map_flower_2.png"
+              alt="우측 하단 꽃 장식"
+              className="absolute -bottom-3.5 -right-3.5 w-12 h-12 sm:w-14 sm:h-14 object-contain pointer-events-none z-20 rotate-12 drop-shadow-[0_4px_10px_rgba(0,0,0,0.45)] transition-transform duration-300 group-hover/map:scale-105"
+            />
+
+            {/* Map Card */}
+            <div
+              onClick={() => setPdfModalOpen(true)}
+              className="w-full border border-white/20 bg-white/[0.04] backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-white/40 shadow-md cursor-pointer relative block"
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setPdfModalOpen(true);
+                }
+              }}
+            >
+              <div className="relative overflow-hidden">
+                <img
+                  src="/images/ladomus_map.jpg"
+                  alt="대전 라도무스 아트센터 약도"
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover/map:scale-[1.02]"
+                />
+                {/* PDF Guide Badge (placed at bottom-left to avoid bottom-right flower) */}
+                <div className="absolute bottom-2.5 left-2.5 px-2.5 py-1 bg-black/75 text-white text-[10px] tracking-wider font-serif border border-white/25 backdrop-blur-sm flex items-center gap-1.5 rounded-sm group-hover/map:bg-black/90 transition-colors">
+                  <ZoomIn className="w-3 h-3 text-white/80" />
+                  <span>상세 안내 (PDF) 보기</span>
+                </div>
               </div>
             </div>
           </div>
