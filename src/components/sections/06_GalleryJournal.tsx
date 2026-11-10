@@ -8,47 +8,28 @@ interface GalleryJournalProps {
   onSelectPhoto?: (index: number) => void;
 }
 
-// Exact percentage coordinates measured from the template board (562 x 924)
-const GALLERY_SLOTS = [
-  // Row 1
-  { id: 1, left: '9.79%', top: '6.39%', width: '21.17%', height: '13.85%', label: '사진 1' },
-  { id: 2, left: '33.45%', top: '6.60%', width: '21.00%', height: '13.64%', label: '사진 2' },
-  { id: 3, left: '56.58%', top: '6.71%', width: '35.05%', height: '13.74%', label: '사진 3' },
-  // Row 2
-  { id: 4, left: '9.61%', top: '21.86%', width: '21.17%', height: '13.96%', label: '사진 4' },
-  { id: 5, left: '33.27%', top: '21.97%', width: '39.86%', height: '13.96%', label: '사진 5' },
-  { id: 6, left: '74.73%', top: '22.08%', width: '16.90%', height: '14.07%', label: '사진 6' },
-  // Row 3
-  { id: 7, left: '9.61%', top: '40.26%', width: '46.09%', height: '14.29%', label: '사진 7' },
-  { id: 8, left: '57.83%', top: '40.69%', width: '33.63%', height: '13.85%', label: '사진 8' },
-  // Row 4 (Large landscape focal photo)
-  { id: 9, left: '34.88%', top: '56.17%', width: '56.58%', height: '24.13%', label: '사진 9' },
-];
-
 export const GalleryJournalSection: React.FC<GalleryJournalProps> = ({ data, onSelectPhoto }) => {
-  // Pull gallery photos from weddingData or fallback to defaults
-  const photos = data.gallery && data.gallery.length > 0
-    ? data.gallery
-    : [
-        { id: 1, src: '/images/gallery/photo1.jpg', alt: '웨딩 사진 1', aspectRatio: 'square' as const },
-        { id: 2, src: '/images/gallery/photo2.jpg', alt: '웨딩 사진 2', aspectRatio: 'square' as const },
-        { id: 3, src: '/images/gallery/photo3.jpg', alt: '웨딩 사진 3', aspectRatio: 'wide' as const },
-        { id: 4, src: '/images/gallery/photo4.jpg', alt: '웨딩 사진 4', aspectRatio: 'square' as const },
-        { id: 5, src: '/images/gallery/photo5.jpg', alt: '웨딩 사진 5', aspectRatio: 'wide' as const },
-        { id: 6, src: '/images/gallery/photo6.jpg', alt: '웨딩 사진 6', aspectRatio: 'tall' as const },
-        { id: 7, src: '/images/gallery/photo7.jpg', alt: '웨딩 사진 7', aspectRatio: 'wide' as const },
-        { id: 8, src: '/images/gallery/photo8.jpg', alt: '웨딩 사진 8', aspectRatio: 'wide' as const },
-        { id: 9, src: '/images/gallery/photo9.jpg', alt: '웨딩 사진 9', aspectRatio: 'wide' as const },
-      ];
+  // Ensure we have 16 photos, falling back to /images/gallery/photo{i}.jpg
+  const basePhotos = data.gallery && data.gallery.length > 0 ? data.gallery : [];
+  const photos = Array.from({ length: 16 }, (_, i) => {
+    return (
+      basePhotos[i] || {
+        id: i + 1,
+        src: `/images/gallery/photo${i + 1}.jpg`,
+        alt: `웨딩 사진 ${i + 1}`,
+        aspectRatio: 'tall' as const,
+      }
+    );
+  });
 
   return (
-    <section id="gallery" className="py-24 px-4 sm:px-6 bg-transparent text-white relative overflow-hidden">
+    <section id="gallery" className="py-24 px-3 sm:px-6 bg-transparent text-white relative overflow-hidden">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="max-w-md mx-auto space-y-8"
+        className="max-w-md mx-auto space-y-7"
       >
         {/* Editorial Header */}
         <div className="text-center space-y-2">
@@ -70,50 +51,52 @@ export const GalleryJournalSection: React.FC<GalleryJournalProps> = ({ data, onS
           <span className="w-10 h-[1px] bg-white/25" />
         </div>
 
-        {/* Vintage Scrapbook Moodboard Canvas */}
-        <div className="relative w-full max-w-[360px] sm:max-w-[400px] mx-auto select-none">
-          {/* Aspect Ratio Container (562 : 924 ≈ 1 : 1.644) */}
-          <div
-            className="relative w-full rounded-2xl overflow-hidden"
-            style={{
-              paddingBottom: '164.4%',
-              filter: 'drop-shadow(0 16px 32px rgba(0,0,0,0.45))'
-            }}
-          >
-            {/* The 9 Photo Slots sitting at exact percentages behind the overlay */}
-            {GALLERY_SLOTS.map((slot, index) => {
-              const photo = photos[index % photos.length];
-              return (
-                <div
-                  key={slot.id}
-                  onClick={() => onSelectPhoto?.(index % photos.length)}
-                  style={{
-                    position: 'absolute',
-                    left: slot.left,
-                    top: slot.top,
-                    width: slot.width,
-                    height: slot.height,
-                  }}
-                  className="overflow-hidden bg-[#FAF6EE] cursor-pointer group z-10"
+        {/* Studio Mounting Board Container */}
+        <div className="relative w-full select-none">
+          <div className="relative bg-[#F4F2EC] rounded-2xl p-3 sm:p-4 shadow-[0_20px_45px_rgba(0,0,0,0.5)] border border-black/10">
+            {/* 4x4 Grid of Pinned Paper Cards */}
+            <div className="grid grid-cols-4 gap-2 sm:gap-2.5">
+              {photos.map((photo, index) => (
+                <motion.div
+                  key={photo.id || index}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => onSelectPhoto?.(index)}
+                  className="relative aspect-[1/1.3] rounded-[2px] cursor-pointer group shadow-[0_3px_10px_rgba(0,0,0,0.28)] bg-stone-200 transition-shadow duration-300 hover:shadow-[0_8px_18px_rgba(0,0,0,0.38)] hover:z-20"
                 >
-                  <img
-                    src={photo.src}
-                    alt={photo.alt || `웨딩 갤러리 사진 ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  {/* Subtle hover feedback */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
-                </div>
-              );
-            })}
+                  {/* Photo (Edge-to-edge full bleed on paper with vintage grading) */}
+                  <div className="w-full h-full rounded-[2px] overflow-hidden bg-stone-900">
+                    <img
+                      src={photo.src}
+                      alt={photo.alt || `웨딩 갤러리 사진 ${index + 1}`}
+                      className="w-full h-full object-cover filter brightness-[0.98] contrast-[1.03] saturate-[0.88] sepia-[0.10] transition-all duration-500 group-hover:scale-105 group-hover:brightness-100 group-hover:sepia-0"
+                      loading="lazy"
+                    />
+                    {/* Subtle hover vignette overlay */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+                  </div>
 
-            {/* Vintage Scrapbook Template Overlay & Pin Stickers (z-20) */}
-            <img
-              src="/images/gallery_template_overlay.png"
-              alt="Vintage Scrapbook Moodboard Frame"
-              className="absolute inset-0 w-full h-full pointer-events-none z-20 object-fill"
-            />
+                  {/* Silver Pushpin (pinned at top-center of each paper sheet) */}
+                  <div className="absolute -top-1.5 sm:-top-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 sm:w-4 sm:h-4 z-30 pointer-events-none drop-shadow-sm">
+                    <img
+                      src="/images/gallery_pin.png"
+                      alt="Pin"
+                      className="w-full h-auto object-contain select-none pointer-events-none"
+                    />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Board Footnote */}
+            <div className="pt-3 sm:pt-4 flex items-center justify-between px-1 text-stone-500 font-serif">
+              <span className="text-[9px] tracking-[0.2em] uppercase font-medium">
+                PINNED MOODBOARD
+              </span>
+              <span className="text-[10px] tracking-widest font-light">
+                4 × 4 · 16 MOMENTS
+              </span>
+            </div>
           </div>
         </div>
 
@@ -127,7 +110,7 @@ export const GalleryJournalSection: React.FC<GalleryJournalProps> = ({ data, onS
           <div className="text-center pt-1">
             <button
               onClick={() => onSelectPhoto(0)}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20 bg-black/20 hover:bg-black/35 backdrop-blur-sm text-xs font-serif tracking-widest text-white/90 hover:text-white transition-all shadow-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 bg-black/20 hover:bg-black/35 backdrop-blur-sm text-xs font-serif tracking-widest text-white/90 hover:text-white transition-all shadow-sm active:scale-95 cursor-pointer"
             >
               <Maximize2 className="w-3.5 h-3.5 text-[#E8D4C8]" />
               <span>전체 사진 크게 보기 ({photos.length})</span>

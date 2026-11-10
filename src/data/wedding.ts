@@ -278,15 +278,22 @@ export const weddingData: WeddingData = {
     champagneCouple: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=1200&q=80"
   },
   gallery: [
-    { id: 1, src: "/images/gallery/photo1.jpg", alt: "웨딩 사진 1", aspectRatio: "square" },
-    { id: 2, src: "/images/gallery/photo2.jpg", alt: "웨딩 사진 2", aspectRatio: "square" },
-    { id: 3, src: "/images/gallery/photo3.jpg", alt: "웨딩 사진 3", aspectRatio: "wide" },
-    { id: 4, src: "/images/gallery/photo4.jpg", alt: "웨딩 사진 4", aspectRatio: "square" },
-    { id: 5, src: "/images/gallery/photo5.jpg", alt: "웨딩 사진 5", aspectRatio: "wide" },
+    { id: 1, src: "/images/gallery/photo1.jpg", alt: "웨딩 사진 1", aspectRatio: "tall" },
+    { id: 2, src: "/images/gallery/photo2.jpg", alt: "웨딩 사진 2", aspectRatio: "tall" },
+    { id: 3, src: "/images/gallery/photo3.jpg", alt: "웨딩 사진 3", aspectRatio: "tall" },
+    { id: 4, src: "/images/gallery/photo4.jpg", alt: "웨딩 사진 4", aspectRatio: "tall" },
+    { id: 5, src: "/images/gallery/photo5.jpg", alt: "웨딩 사진 5", aspectRatio: "tall" },
     { id: 6, src: "/images/gallery/photo6.jpg", alt: "웨딩 사진 6", aspectRatio: "tall" },
-    { id: 7, src: "/images/gallery/photo7.jpg", alt: "웨딩 사진 7", aspectRatio: "wide" },
-    { id: 8, src: "/images/gallery/photo8.jpg", alt: "웨딩 사진 8", aspectRatio: "wide" },
-    { id: 9, src: "/images/gallery/photo9.jpg", alt: "웨딩 사진 9", aspectRatio: "wide" }
+    { id: 7, src: "/images/gallery/photo7.jpg", alt: "웨딩 사진 7", aspectRatio: "tall" },
+    { id: 8, src: "/images/gallery/photo8.jpg", alt: "웨딩 사진 8", aspectRatio: "tall" },
+    { id: 9, src: "/images/gallery/photo9.jpg", alt: "웨딩 사진 9", aspectRatio: "tall" },
+    { id: 10, src: "/images/gallery/photo10.jpg", alt: "웨딩 사진 10", aspectRatio: "tall" },
+    { id: 11, src: "/images/gallery/photo11.jpg", alt: "웨딩 사진 11", aspectRatio: "tall" },
+    { id: 12, src: "/images/gallery/photo12.jpg", alt: "웨딩 사진 12", aspectRatio: "tall" },
+    { id: 13, src: "/images/gallery/photo13.jpg", alt: "웨딩 사진 13", aspectRatio: "tall" },
+    { id: 14, src: "/images/gallery/photo14.jpg", alt: "웨딩 사진 14", aspectRatio: "tall" },
+    { id: 15, src: "/images/gallery/photo15.jpg", alt: "웨딩 사진 15", aspectRatio: "tall" },
+    { id: 16, src: "/images/gallery/photo16.jpg", alt: "웨딩 사진 16", aspectRatio: "tall" }
   ],
   weddingSnaps: [
     {
