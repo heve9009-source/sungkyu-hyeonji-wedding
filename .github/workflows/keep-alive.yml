@@ -1,0 +1,56 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # 3일마다 한국 시간 기준 오전 9시 (UTC 00:00)에 자동 실행하여 DB 비활성화 방지
+    - cron: '0 0 */3 * *'
+  workflow_dispatch: # GitHub Actions 탭에서 수동으로 즉시 실행 가능
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_KEY" ]; then
+            echo "::error::SUPABASE_URL 또는 SUPABASE_KEY가 GitHub Secrets에 설정되지 않았습니다."
+            echo "GitHub 저장소의 Settings > Secrets and variables > Actions에 등록해주세요."
+            exit 1
+          fi
+
+          # URL 끝의 슬래시(/) 자동 제거
+          CLEAN_URL="${SUPABASE_URL%/}"
+
+          echo "Pinging Supabase database to prevent inactivity pause..."
+          
+          # 1. PostgREST API를 통해 DB 쿼리 실행 (guestbook 테이블 조회)
+          HTTP_STATUS=$(curl -s -o response.txt -w "%{http_code}" \
+            -X GET "$CLEAN_URL/rest/v1/guestbook?select=id&limit=1" \
+            -H "apikey: $SUPABASE_KEY" \
+            -H "Authorization: Bearer $SUPABASE_KEY")
+
+          echo "Response HTTP Status: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 300 ]; then
+            echo "✅ Supabase database keep-alive request successful!"
+          elif [ "$HTTP_STATUS" -eq 404 ]; then
+            # guestbook 테이블이 없는 경우 루트 엔드포인트로 2차 시도
+            echo "guestbook 테이블 확인 불가로 루트 REST 엔드포인트를 호출합니다."
+            HTTP_STATUS=$(curl -s -o response.txt -w "%{http_code}" \
+              -X GET "$CLEAN_URL/rest/v1/" \
+              -H "apikey: $SUPABASE_KEY" \
+              -H "Authorization: Bearer $SUPABASE_KEY")
+            echo "Fallback HTTP Status: $HTTP_STATUS"
+            if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+              echo "✅ Supabase keep-alive fallback successful!"
+            else
+              echo "::warning::Supabase response status: $HTTP_STATUS"
+              cat response.txt
+            fi
+          else
+            echo "::warning::Supabase response status: $HTTP_STATUS"
+            cat response.txt
+          fi
