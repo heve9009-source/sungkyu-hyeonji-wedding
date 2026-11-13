@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { WeddingData } from '../../data/wedding';
 
 interface TimelineProps {
@@ -8,39 +7,85 @@ interface TimelineProps {
 }
 
 export const TimelineSection: React.FC<TimelineProps> = ({ data }) => {
-  const photos = data.timelinePhotos && data.timelinePhotos.length > 0
-    ? data.timelinePhotos
+  // Pool of all wedding photos from data
+  const timelinePhotos = data.timelinePhotos && data.timelinePhotos.length > 0
+    ? data.timelinePhotos.map(p => p.src)
     : [
-        { id: 1, src: '/images/timeline/photo1.jpg', alt: '추억 1' },
-        { id: 2, src: '/images/timeline/photo2.jpg', alt: '추억 2' },
-        { id: 3, src: '/images/timeline/photo3.jpg', alt: '추억 3' },
-        { id: 4, src: '/images/timeline/photo4.jpg', alt: '추억 4' },
-        { id: 5, src: '/images/timeline/photo5.jpg', alt: '추억 5' },
-        { id: 6, src: '/images/timeline/photo6.jpg', alt: '추억 6' },
+        '/images/timeline/photo1.jpg',
+        '/images/timeline/photo2.jpg',
+        '/images/timeline/photo3.jpg',
+        '/images/timeline/photo4.jpg',
+        '/images/timeline/photo5.jpg',
+        '/images/timeline/photo6.jpg',
       ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const galleryPhotos = data.gallery && data.gallery.length > 0
+    ? data.gallery.map(p => p.src)
+    : [];
 
-  const handleNext = useCallback(() => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % photos.length);
-  }, [photos.length]);
+  // Group photos gracefully across the 3 frames (Camera, Film 1, Film 2)
+  const cameraPhotos = [
+    timelinePhotos[0] || '/images/timeline/photo1.jpg',
+    timelinePhotos[3] || '/images/timeline/photo4.jpg',
+    galleryPhotos[0] || '/images/gallery/photo1.jpg',
+    galleryPhotos[6] || '/images/gallery/photo7.jpg',
+    galleryPhotos[12] || '/images/gallery/photo13.jpg',
+  ];
 
-  const handlePrev = useCallback(() => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + photos.length) % photos.length);
-  }, [photos.length]);
+  const film1Photos = [
+    timelinePhotos[1] || '/images/timeline/photo2.jpg',
+    timelinePhotos[4] || '/images/timeline/photo5.jpg',
+    galleryPhotos[1] || '/images/gallery/photo2.jpg',
+    galleryPhotos[7] || '/images/gallery/photo8.jpg',
+    galleryPhotos[13] || '/images/gallery/photo14.jpg',
+  ];
 
-  // Automatic slide interval: 3.5 seconds
+  const film2Photos = [
+    timelinePhotos[2] || '/images/timeline/photo3.jpg',
+    timelinePhotos[5] || '/images/timeline/photo6.jpg',
+    galleryPhotos[2] || '/images/gallery/photo3.jpg',
+    galleryPhotos[8] || '/images/gallery/photo9.jpg',
+    galleryPhotos[14] || '/images/gallery/photo15.jpg',
+  ];
+
+  // 1. Digital Camera State & Auto-Slide (3.4s)
+  const [camIndex, setCamIndex] = useState(0);
+  const handleCamNext = useCallback(() => {
+    setCamIndex((prev) => (prev + 1) % cameraPhotos.length);
+  }, [cameraPhotos.length]);
+
   useEffect(() => {
     const timer = setInterval(() => {
-      handleNext();
-    }, 3500);
+      handleCamNext();
+    }, 3400);
     return () => clearInterval(timer);
-  }, [handleNext]);
+  }, [handleCamNext]);
 
-  const currentPhoto = photos[currentIndex];
+  // 2. Film 1 State & Auto-Slide (4.1s - staggered for organic flow)
+  const [film1Index, setFilm1Index] = useState(0);
+  const handleFilm1Next = useCallback(() => {
+    setFilm1Index((prev) => (prev + 1) % film1Photos.length);
+  }, [film1Photos.length]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      handleFilm1Next();
+    }, 4100);
+    return () => clearInterval(timer);
+  }, [handleFilm1Next]);
+
+  // 3. Film 2 State & Auto-Slide (4.7s - staggered)
+  const [film2Index, setFilm2Index] = useState(0);
+  const handleFilm2Next = useCallback(() => {
+    setFilm2Index((prev) => (prev + 1) % film2Photos.length);
+  }, [film2Photos.length]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      handleFilm2Next();
+    }, 4700);
+    return () => clearInterval(timer);
+  }, [handleFilm2Next]);
 
   return (
     <section id="timeline" className="py-24 px-4 sm:px-6 bg-transparent text-white overflow-hidden">
@@ -60,7 +105,7 @@ export const TimelineSection: React.FC<TimelineProps> = ({ data }) => {
             우리의 타임라인
           </h2>
           <p className="font-serif text-xs text-white/70 font-light">
-            서로를 만나 함께 걸어온 소중한 시간들
+            디지털 카메라와 필름에 담아낸 둘만의 소중한 시간들
           </p>
         </div>
 
@@ -71,105 +116,148 @@ export const TimelineSection: React.FC<TimelineProps> = ({ data }) => {
           <span className="w-10 h-[1px] bg-white/25" />
         </div>
 
-        {/* Binder / Clipboard Container */}
+        {/* Retro Collage Container: 576 x 1024 Aspect Ratio */}
         <div className="relative flex flex-col items-center justify-center pt-2">
-          {/* Main Clipboard Body */}
-          <div
-            onClick={handleNext}
-            className="relative w-full max-w-[320px] sm:max-w-[350px] aspect-[1/1.55] bg-[#FAF9F5] rounded-[22px] border border-black/10 shadow-[0_20px_45px_rgba(0,0,0,0.55)] p-4 sm:p-5 flex flex-col items-center justify-between cursor-pointer select-none group transition-transform duration-300 active:scale-[0.99]"
-          >
-            {/* Top Metal Clip Clamp (Authentic Photo Asset) */}
-            <div className="absolute top-4 sm:top-5 left-1/2 -translate-x-1/2 w-[84%] max-w-[280px] z-30 pointer-events-none">
-              <img
-                src="/images/timeline_clipboard_clip.png"
-                alt="Binder Clip"
-                className="w-full h-auto drop-shadow-[0_6px_12px_rgba(0,0,0,0.3)]"
-              />
-            </div>
-
-            {/* Top spacing spacer so photo starts tucked under the clamp */}
-            <div className="h-10 sm:h-12 w-full flex-shrink-0" />
-
-            {/* Inner Photo Frame (tucked under clip, centered on white paper) */}
-            <div className="relative w-full flex-1 rounded-[4px] overflow-hidden bg-stone-900 shadow-inner border border-black/5 min-h-0">
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.div
-                  key={currentPhoto.id || currentIndex}
-                  initial={{ opacity: 0, x: direction * 40 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: direction * -40 }}
-                  transition={{ duration: 0.45, ease: 'easeInOut' }}
-                  className="absolute inset-0"
-                >
-                  <img
-                    src={currentPhoto.src}
-                    alt={currentPhoto.alt || '추억 사진'}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-                  />
-                  {/* Subtle photo vignette overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10 pointer-events-none" />
-                </motion.div>
+          <div className="relative w-full max-w-[350px] sm:max-w-[390px] aspect-[576/1024] select-none filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.6)]">
+            
+            {/* ============================================================== */}
+            {/* 1. DIGITAL CAMERA LCD SCREEN (x: 74..315, y: 101..281)         */}
+            {/* ============================================================== */}
+            <div
+              onClick={handleCamNext}
+              style={{
+                left: '12.6%',
+                top: '9.7%',
+                width: '42.3%',
+                height: '17.8%',
+              }}
+              className="absolute overflow-hidden bg-black cursor-pointer group"
+              title="터치 시 다음 사진"
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={cameraPhotos[camIndex]}
+                  src={cameraPhotos[camIndex]}
+                  alt="디지털 카메라 속 사진"
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.6, ease: 'easeInOut' }}
+                  className="w-full h-full object-cover"
+                />
               </AnimatePresence>
 
-              {/* Prev / Next Click Zones on Hover (Desktop) / Tap */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handlePrev();
-                }}
-                className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 backdrop-blur-sm hover:bg-black/60"
-                aria-label="이전 사진"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleNext();
-                }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-20 backdrop-blur-sm hover:bg-black/60"
-                aria-label="다음 사진"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+              {/* Retro Digital Camera LCD HUD Overlay */}
+              <div className="absolute inset-0 pointer-events-none p-1.5 flex flex-col justify-between text-[8px] sm:text-[9px] font-mono text-white/90 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] z-10">
+                <div className="flex items-center justify-between">
+                  {/* REC Indicator */}
+                  <span className="flex items-center gap-1 font-semibold tracking-wider text-red-500">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                    REC
+                  </span>
+                  {/* Battery */}
+                  <span className="text-white/80 tracking-widest text-[7px]">
+                    [▮▮▮]
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-[7px] text-white/70">
+                  <span>ISO 100</span>
+                  <span className="font-serif">27.05.08</span>
+                </div>
+              </div>
+
+              {/* Subtle LCD Scanline / Glass Reflection */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.04] to-white/[0.12] pointer-events-none z-10" />
             </div>
 
-            {/* Bottom Paper Margin with Subtle Page Counter */}
-            <div className="pt-2 sm:pt-2.5 pb-0.5 w-full flex items-center justify-between px-1.5 flex-shrink-0">
-              <span className="font-serif text-[9px] tracking-[0.25em] uppercase text-stone-500 font-medium">
-                OUR TIMELINE
-              </span>
-              <span className="font-serif text-[10px] tracking-widest text-stone-500 font-light">
-                {currentIndex + 1} / {photos.length}
-              </span>
+            {/* ============================================================== */}
+            {/* 2. FILM FRAME 1 (MIDDLE RIGHT: x: 256..556, y: 399..613)       */}
+            {/* ============================================================== */}
+            <div
+              onClick={handleFilm1Next}
+              style={{
+                left: '44.2%',
+                top: '38.8%',
+                width: '52.4%',
+                height: '21.0%',
+              }}
+              className="absolute overflow-hidden bg-stone-900 cursor-pointer group"
+              title="터치 시 다음 사진"
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={film1Photos[film1Index]}
+                  src={film1Photos[film1Index]}
+                  alt="필름 사진 1"
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.65, ease: 'easeInOut' }}
+                  className="w-full h-full object-cover"
+                />
+              </AnimatePresence>
+
+              {/* Vintage Film Overlay: Crosshair & Warm Wash */}
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center text-white/20 text-xs font-light z-10">
+                <span>+</span>
+              </div>
+              <div className="absolute inset-0 bg-amber-900/[0.08] pointer-events-none mix-blend-color z-10" />
             </div>
+
+            {/* ============================================================== */}
+            {/* 3. FILM FRAME 2 (BOTTOM LEFT/CENTER: x: 138..438, y: 723..937) */}
+            {/* ============================================================== */}
+            <div
+              onClick={handleFilm2Next}
+              style={{
+                left: '23.8%',
+                top: '70.5%',
+                width: '52.4%',
+                height: '21.0%',
+              }}
+              className="absolute overflow-hidden bg-stone-900 cursor-pointer group"
+              title="터치 시 다음 사진"
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={film2Photos[film2Index]}
+                  src={film2Photos[film2Index]}
+                  alt="필름 사진 2"
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.65, ease: 'easeInOut' }}
+                  className="w-full h-full object-cover"
+                />
+              </AnimatePresence>
+
+              {/* Vintage Film Overlay: Crosshair & Warm Wash */}
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center text-white/20 text-xs font-light z-10">
+                <span>+</span>
+              </div>
+              <div className="absolute inset-0 bg-amber-900/[0.08] pointer-events-none mix-blend-color z-10" />
+            </div>
+
+            {/* ============================================================== */}
+            {/* 4. MASTER RETRO OVERLAY (Canon Camera + 35mm Films + Stars)    */}
+            {/* ============================================================== */}
+            <img
+              src="/images/timeline_retro_template.png"
+              alt="디지털 카메라와 빈티지 필름 틀"
+              className="absolute inset-0 w-full h-full object-contain pointer-events-none select-none z-20"
+              draggable={false}
+            />
           </div>
 
-          {/* Minimalist Dot Indicators */}
-          <div className="flex items-center justify-center gap-2 pt-5">
-            {photos.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => {
-                  setDirection(idx > currentIndex ? 1 : -1);
-                  setCurrentIndex(idx);
-                }}
-                aria-label={(idx + 1) + "번째 사진 보기"}
-                className={
-                  "h-1.5 rounded-full transition-all duration-300 cursor-pointer " +
-                  (currentIndex === idx ? "w-6 bg-[#E8D4C8]" : "w-1.5 bg-white/30 hover:bg-white/60")
-                }
-              />
-            ))}
+          {/* Touch / Interaction Hint */}
+          <div className="pt-6 space-y-1 text-center">
+            <p className="font-serif text-[11px] text-white/60 tracking-wider">
+              ✦ 디카와 필름의 사진이 자동으로 흘러갑니다 ✦
+            </p>
+            <p className="font-serif text-[9px] text-white/40 tracking-wider">
+              (각 프레임을 가볍게 터치하시면 다음 사진으로 바로 넘겨보실 수 있습니다)
+            </p>
           </div>
-
-          {/* Subtle Tap Hint */}
-          <p className="text-center font-serif text-[11px] text-white/50 tracking-wider pt-2">
-            ✦ 바인더를 터치하면 다음 사진으로 넘어갑니다 ✦
-          </p>
         </div>
       </motion.div>
     </section>
